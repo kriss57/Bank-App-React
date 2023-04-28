@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { requestService } from "../../_services/request.service";
+// import hooks redux from "react-redux"
+import { useDispatch, useSelector } from "react-redux";
 
-interface UserProfile {
-  firstName: string;
-  lastName: string;
+interface RootState {
+  userInfo: {
+    firstName: string;
+    lastName: string;
+  };
 }
 
 const HeaderProfil = () => {
-  const [userInfo, setUserInfo] = useState<UserProfile | null>(null);
+  //const [userInfo, setUserInfo] = useState<UserProfile | null>(null);
   const [toggle, setToggle] = useState(true);
+  // init dispatch
+  const dispatch = useDispatch();
+  // get data store
+  const userData = useSelector((state: RootState) => state.userInfo);
+  console.log(userData);
 
   const [formData, setFormData] = useState<{
     firstName: string;
@@ -19,8 +28,17 @@ const HeaderProfil = () => {
     const fetchData = async () => {
       try {
         const response = await requestService.getUser();
+        console.log(response.data.body.firstName);
 
-        setUserInfo(response.data.body);
+        // Feeds the store userInfo
+        dispatch({
+          type: "userInfo/setFirstName",
+          payload: response?.data.body.firstName,
+        });
+        dispatch({
+          type: "userInfo/setLastName",
+          payload: response?.data.body.lastName,
+        });
         //setLoading(false);
       } catch (error) {
         console.error(error);
@@ -28,12 +46,11 @@ const HeaderProfil = () => {
     };
 
     fetchData();
-  }, []);
+  }, [dispatch]);
 
   const showEditForm = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setToggle(!toggle);
-    console.log(toggle);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,10 +62,18 @@ const HeaderProfil = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(formData);
     try {
       const response = await requestService.updateUser(formData);
       console.log(response.data);
+      // Update the store userInfo
+      dispatch({
+        type: "userInfo/setFirstName",
+        payload: response.data.body.firstName,
+      });
+      dispatch({
+        type: "userInfo/setLastName",
+        payload: response.data.body.lastName,
+      });
       //return response.data;
     } catch (error) {
       throw new Error("Error update user data");
@@ -62,7 +87,7 @@ const HeaderProfil = () => {
           <h1>
             Welcome back
             <br />
-            {userInfo && userInfo?.firstName + " " + userInfo?.lastName}
+            {userData && userData?.firstName + " " + userData?.lastName}
           </h1>
           <button onClick={showEditForm} className="edit-button">
             Edit Name
@@ -76,13 +101,13 @@ const HeaderProfil = () => {
               <input
                 type="text"
                 name="firstName"
-                placeholder={userInfo?.firstName}
+                placeholder={userData?.firstName}
                 onChange={handleChange}
               />
               <input
                 type="text"
                 name="lastName"
-                placeholder={userInfo?.lastName}
+                placeholder={userData?.lastName}
                 onChange={handleChange}
               />
             </div>
