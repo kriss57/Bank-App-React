@@ -7,7 +7,6 @@ const Axios: AxiosInstance = axios.create({
 
 Axios.interceptors.request.use(
   (request) => {
-    console.log(request.headers);
     const token = tokenService.checkToken();
     if (token) {
       console.log("token exist");
