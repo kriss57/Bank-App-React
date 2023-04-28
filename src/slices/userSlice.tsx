@@ -3,15 +3,19 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
   name: "userInfo",
   initialState: {
-    aller: "",
-    retour: "",
+    firstName: "",
+    lastName: "",
   },
   reducers: {
-    sendAller: (state, action) => {
-      state.aller = action.payload;
+    setFirstName: (state, action) => {
+      state.firstName = action.payload;
     },
-    sendRetor: (state, action) => {
-      state.retour = action.payload;
+    setLastName: (state, action) => {
+      state.lastName = action.payload;
+    },
+    resetUserInfo: (state, action) => {
+      state.firstName = "";
+      state.lastName = "";
     },
   },
 });
