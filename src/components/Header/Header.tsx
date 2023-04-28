@@ -1,15 +1,24 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../_assets/images/argentBankLogo.png";
-
+import { useSelector } from "react-redux";
 import { tokenService } from "../../_services/token.services";
 
 import "./header.css";
 
+interface RootState {
+  userInfo: {
+    firstName: string;
+    lastName: string;
+  };
+}
+
 const Header = () => {
   // récuperere username ou data avec redux !!!
-  const userName = null;
+  const userName = useSelector((state: RootState) => state.userInfo.firstName);
   const navigate = useNavigate();
+
+  console.log(userName);
 
   const logout = () => {
     tokenService.logout();
@@ -28,11 +37,11 @@ const Header = () => {
         </Link>
 
         {userName ? (
-          <ul>
+          <ul className="main-ul">
             <li className="main-nav-item">
-              <Link to="/profil">
+              <Link to="/auth/profil">
                 <i className="fa-solid fa-circle-user"></i>
-                Tony
+                {userName}
               </Link>
             </li>
             <li onClick={logout} className="main-nav-item">
@@ -43,7 +52,7 @@ const Header = () => {
             </li>
           </ul>
         ) : (
-          <ul>
+          <ul className="main-ul">
             <li className="main-nav-item">
               <Link to="/sign-in">
                 <i
