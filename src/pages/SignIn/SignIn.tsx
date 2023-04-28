@@ -6,7 +6,7 @@ import { requestService } from "../../_services/request.service";
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
-  // faudra passer le nom et pass dans useState(par defaiut si deja logger)
+
   const [formData, setFormData] = useState<{
     email: string;
     password: string;
