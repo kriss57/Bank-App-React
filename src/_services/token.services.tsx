@@ -1,3 +1,4 @@
+import { store } from "../store";
 // Token service //
 
 let saveToken = (token: string) => {
@@ -5,6 +6,9 @@ let saveToken = (token: string) => {
 };
 
 let logout = () => {
+  store.dispatch({
+    type: "userInfo/resetUserInfo",
+  });
   localStorage.removeItem("token");
 };
 
