@@ -6,3 +6,5 @@ export const store = configureStore({
     userInfo: userSlice.reducer,
   },
 });
+
+export type AppDispatch = typeof store.dispatch;
