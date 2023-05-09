@@ -68,7 +68,7 @@ paths:
           description: Account Not Found
         "500":
           description: Internal Server Error
-  /accounts/{aid}/transactions/{currentMonth}:
+  /transactions/accounts/{aid}/{currentMonth}:
     get:
       security:
         - Bearer: []
@@ -105,7 +105,7 @@ paths:
           description: Transactions Not Found
         "500":
           description: Internal Server Error
-  /accounts/{aid}/transactions/{tid}/:
+  /transactions/{tid}/{aid}:
     get:
       security:
         - Bearer: []
@@ -142,7 +142,7 @@ paths:
           description: Transactions Not Found
         "500":
           description: Internal Server Error
-  /accounts/{aid}/transactions/{tid}/info:
+  /info/transactions/{tid}/:
     get:
       security:
         - Bearer: []

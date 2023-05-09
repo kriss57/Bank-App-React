@@ -13,7 +13,7 @@
     <img src="https://img.shields.io/badge/typescript-4.9.5-blue">
     <img src="https://img.shields.io/badge/node--lts-18.15.0-brightgreen">   
     <img src="https://img.shields.io/badge/npm-9.5.1-brightgreen">
-    <img src="https://img.shields.io/badge/react-redux-8.0.5-violet">
+    <img src="https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white">
     <img src="https://img.shields.io/badge/axios-1.3.4-violet">
   <br>
 </p>
