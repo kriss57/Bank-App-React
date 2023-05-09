@@ -1,47 +1,70 @@
-# Getting Started with Create React App
+<div align="center">
+<img src="./src/_assets/images/argentBankLogo.png" width="180"/>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# SportSee - Front End
 
-## Available Scripts
+<img src="https://user-images.githubusercontent.com/25181517/183897015-94a058a6-b86e-4e42-a37f-bf92061753e5.png" width="24"/> ReactJS 18
 
-In the project directory, you can run:
+</div>
 
-### `npm start`
+<p align="center">
+    <img src="https://img.shields.io/badge/React-v18.2.0-blue">
+    <img src="https://img.shields.io/badge/React--Router-6.9.0-blue">
+    <img src="https://img.shields.io/badge/typescript-4.9.5-blue">
+    <img src="https://img.shields.io/badge/node--lts-18.15.0-brightgreen">   
+    <img src="https://img.shields.io/badge/npm-9.5.1-brightgreen">
+    <img src="https://img.shields.io/badge/react-redux-8.0.5-violet">
+    <img src="https://img.shields.io/badge/axios-1.3.4-violet">
+  <br>
+</p>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# About
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+This project is the front of the ArgentBank application.
 
-### `npm test`
+Project launched with the [Create React App](https://github.com/facebook/create-react-app).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Features
 
-### `npm run build`
+- Data manipulation with a Rest API and MongoDB database
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Prerequisites
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+To work properly check your environment
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- [NodeJS (**version 18 or higher**)](https://nodejs.org/en/)
+- [npm (**version 9.5.1 or higher**)](https://www.npmjs.com/)
 
-### `npm run eject`
+link to download the Rest Api
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+[https://github.com/OpenClassrooms-Student-Center/Project-10-Bank-API.git](https://github.com/OpenClassrooms-Student-Center/Project-10-Bank-API.git)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Installation
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Once the repository is cloned and in the project folder, do not forget to install the dependencies
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+cd Project-10-Bank-API
+```
 
-## Learn More
+```
+npm install
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Launch
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-# Bank-App-React
+### Dévlopment
+
+make sure you have started the api and run the command:
+
+```
+npm  start
+```
+
+### Production
+
+To build and generate the html, css and js files, you have the command (the generation will be done in the build folder)
+
+```
+npm run build
+```
