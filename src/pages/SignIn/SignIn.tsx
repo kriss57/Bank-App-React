@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { tokenService } from "../../_services/token.services";
 import { requestService } from "../../_services/request.service";
+import { useDispatch } from "react-redux";
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
@@ -16,9 +16,10 @@ const SignIn: React.FC = () => {
     event.preventDefault();
     try {
       const res = await requestService.login(formData);
-      console.log(res.data);
+
       let token = res.data.body.token;
       tokenService.saveToken(token);
+
       navigate("/auth/profil");
     } catch (err) {
       console.log(err);
@@ -29,6 +30,14 @@ const SignIn: React.FC = () => {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
+    });
+  };
+
+  const dispatch = useDispatch();
+  const handleRemember = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({
+      type: "userInfo/isRememberMe",
+      payload: event.target.checked,
     });
   };
 
@@ -59,12 +68,9 @@ const SignIn: React.FC = () => {
             />
           </div>
           <div className="input-remember">
-            <input type="checkbox" id="remember-me" />
+            <input type="checkbox" onChange={handleRemember} id="remember-me" />
             <label htmlFor="remember-me">Remember me</label>
           </div>
-          {/* PLACEHOLDER DUE TO STATIC SITE  */}
-          {/* <a href="./user.html" className="sign-in-button">Sign In</a> */}
-          {/* SHOULD BE THE BUTTON BELOW  */}
           <button className="sign-in-button">Sign In</button>
         </form>
         <p>{formData.email}</p>

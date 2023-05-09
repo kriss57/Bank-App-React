@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../_assets/images/argentBankLogo.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { tokenService } from "../../_services/token.services";
 
 import "./header.css";
@@ -10,19 +10,37 @@ interface RootState {
   userInfo: {
     firstName: string;
     lastName: string;
+    checked: boolean;
   };
 }
 
 const Header = () => {
-  // récuperere username ou data avec redux !!!
-  const userName = useSelector((state: RootState) => state.userInfo.firstName);
+  const dispatch = useDispatch();
+  const rememberMe = useSelector((state: RootState) => state.userInfo.checked);
+  const firstNameStore = useSelector(
+    (state: RootState) => state.userInfo.firstName
+  );
+
+  useEffect(() => {
+    const firstNameLocalStorage = localStorage.getItem("firstName");
+
+    if (localStorage.getItem("firstName")) {
+      dispatch({
+        type: "userInfo/setFirstName",
+        payload: firstNameLocalStorage,
+      });
+    }
+  }, [rememberMe, dispatch]);
+
+  console.log(rememberMe);
+
   const navigate = useNavigate();
 
-  console.log(userName);
-
   const logout = () => {
-    tokenService.logout();
-    navigate("/");
+    if (!rememberMe) {
+      tokenService.logout();
+      navigate("/");
+    }
   };
 
   return (
@@ -36,17 +54,26 @@ const Header = () => {
           />
         </Link>
 
-        {userName ? (
+        {firstNameStore ? (
           <ul className="main-ul">
             <li className="main-nav-item">
               <Link to="/auth/profil">
-                <i className="fa-solid fa-circle-user"></i>
-                {userName}
+                <i
+                  className="fa-solid fa-circle-user"
+                  style={{
+                    paddingRight: "10px",
+                    color: "rgb(142, 159, 199)",
+                  }}
+                ></i>
+                {firstNameStore}
               </Link>
             </li>
             <li onClick={logout} className="main-nav-item">
               <Link to="/home">
-                <i className="fa-solid fa-sign-out"></i>
+                <i
+                  className="fa-solid fa-sign-out"
+                  style={{ paddingRight: "10px" }}
+                ></i>
                 Sign Out
               </Link>
             </li>
@@ -57,8 +84,7 @@ const Header = () => {
               <Link to="/sign-in">
                 <i
                   style={{
-                    paddingTop: "3px",
-                    paddingRight: "5px",
+                    paddingRight: "10px",
                     textAlign: "center",
                   }}
                   className="fa-solid fa-circle-user"
