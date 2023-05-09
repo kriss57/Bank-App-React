@@ -1,0 +1,474 @@
+swagger: "2.0"
+info:
+  title: Bank Argent API documentation
+  description: Contains all available API endpoints in this codebase
+  version: "2.0.0"
+  termsOfService: "http://swagger.io/terms/"
+host: localhost:3001
+basePath: /api/v2
+schemes:
+  - http
+paths:
+  /accounts:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - accounts Module
+      summary: accounts
+      description: Fetching all accounts
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          description: Attach Bearer JWT token
+          required: true
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Fetching Accounts Successfully
+          schema:
+            $ref: "#/definitions/AccountsResponse"
+        "400":
+          description: Bad Request
+        "404":
+          description: Accounts Not Found
+        "500":
+          description: Internal Server Error
+  /accounts/{aid}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - accounts Module
+      summary: account by id
+      description: Fetching one account by id
+      parameters:
+        - in: path
+          name: aid
+          description: Account id to fetch
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          type: string
+          description: Attach Bearer JWT token
+          required: true
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Fetching Account Successfully
+          schema:
+            $ref: "#/definitions/AccountResponse"
+        "400":
+          description: Bad Request
+        "404":
+          description: Account Not Found
+        "500":
+          description: Internal Server Error
+  /accounts/{aid}/transactions/{currentMonth}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - transactions Module
+      summary: Transactions of an account
+      description: Fetching all transactions of an acount
+      parameters:
+        - in: path
+          name: aid
+          description: Account id to fectch transactions
+          required: true
+          type: string
+        - in: path
+          name: currentMonth
+          description: currentMonth to fectch transactions
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          type: string
+          description: Attach Bearer JWT token
+          required: true
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Fetching Transactions Successfully
+          schema:
+            $ref: "#/definitions/TransactionsResponse"
+        "400":
+          description: Bad Request
+        "404":
+          description: Transactions Not Found
+        "500":
+          description: Internal Server Error
+  /accounts/{aid}/transactions/{tid}/:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - transactions Module
+      summary: Transaction by id
+      description: Fetching one transaction by id
+      parameters:
+        - in: path
+          name: aid
+          description: Account id for transaction
+          required: true
+          type: string
+        - in: path
+          name: tid
+          description: transaction id to fetch
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          type: string
+          description: Attach Bearer JWT token
+          required: true
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Fetching Transaction Successfully
+          schema:
+            $ref: "#/definitions/TransactionResponse"
+        "400":
+          description: Bad Request
+        "404":
+          description: Transactions Not Found
+        "500":
+          description: Internal Server Error
+  /accounts/{aid}/transactions/{tid}/info:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Info Module
+      summary: info
+      description: Fetching info (category and notes)
+      parameters:
+        - in: path
+          name: aid
+          description: Account id for transaction
+          required: true
+          type: string
+        - in: path
+          name: tid
+          description: transaction id to fetch
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          type: string
+          description: Attach Bearer JWT token
+          required: true
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Fetching InfoResponse Successfully
+          schema:
+            $ref: "#/definitions/InfoResponse"
+        "400":
+          description: Bad Request
+        "404":
+          description: Info Not Found
+        "500":
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Info Module
+      summary: Create Info
+      description: Creating info (category and notes)
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          description: Attach Bearer JWT token
+          required: true
+        - in: path
+          name: aid
+          description: Account id for transaction
+          required: true
+          type: string
+        - in: path
+          name: tid
+          description: transaction id to fetch
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Info Payload
+          required: true
+          schema:
+            $ref: "#/definitions/InfoRequest"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Created Info Successfully
+          schema:
+            $ref: "#/definitions/InfoResponse"
+        "400":
+          description: Bad Request
+        "404":
+          description: Info Not Found
+        "500":
+          description: Internal Server Error
+    patch:
+      security:
+        - Bearer: []
+      tags:
+        - Info Module
+      summary: Update Info category and note
+      description: Updating info (category and notes)
+      parameters:
+        - in: path
+          name: aid
+          description: Account id for transaction
+          required: true
+          type: string
+        - in: path
+          name: tid
+          description: Account id for transaction
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          type: string
+          description: Attach Bearer JWT token
+          required: true
+        - in: body
+          name: body
+          description: Info Payload
+          required: true
+          schema:
+            $ref: "#/definitions/UpdateInfoRequest"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Updated Info Successfully
+          schema:
+            $ref: "#/definitions/UpdateInfoResponse"
+        "400":
+          description: Bad Request
+        "404":
+          description: Info Not Found
+        "500":
+          description: Internal Server Error
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Info Module
+      summary: Deleted Info
+      description: Deleting info (category and notes)
+      parameters:
+        - in: path
+          name: aid
+          description: Account id for transaction
+          required: true
+          type: string
+        - in: path
+          name: tid
+          description: Account id for transaction
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          type: string
+          description: Attach Bearer JWT token
+          required: true
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Deleted Info Successfully
+          schema:
+            $ref: "#/definitions/DeleteInfoResponse"
+        "400":
+          description: Bad Request
+        "404":
+          description: Info Not Found
+        "500":
+          description: Internal Server Error
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  AccountsResponse:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Accounts id
+          example: "x8349"
+        title:
+          type: string
+          description: Accounts title
+          example: "Argent Bank Checking"
+        amount:
+          type: number
+          description: Accounts amount
+          example: 208279
+        balanceStatus:
+          type: string
+          description: Accounts balanceStatus
+          example: "Available"
+  AccountResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Accounts id
+        example: "x8349"
+      title:
+        type: string
+        description: Accounts title
+        example: "Argent Bank Checking"
+      amount:
+        type: number
+        description: Accounts amount
+        example: 208279
+      balanceStatus:
+        type: string
+        description: Accounts balanceStatus
+        example: "Available"
+  TransactionsResponse:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+          description: transaction id
+          example: "x8349"
+        currentMonth:
+          type: string
+          description: transaction currentMonth
+          example: "YYYY-MM"
+        date:
+          type: string
+          description: transaction date
+          example: "YYYY-MM-JJ"
+        description:
+          type: string
+          description: transaction description
+          example: "Golden Sun"
+        amount:
+          type: number
+          description: transaction amount
+          example: 10
+        balance:
+          type: number
+          description: transaction balance
+          example: 208279
+        transactionType:
+          type: string
+          description: transaction transactionType
+          example: "Electronic"
+  TransactionResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        description: transaction id
+        example: "x8349"
+      date:
+        type: string
+        description: transaction date
+        example: "YYYY-MM-JJ"
+      description:
+        type: string
+        description: transaction description
+        example: "Golden Sun"
+      amount:
+        type: number
+        description: transaction amount
+        example: 10
+      balance:
+        type: number
+        description: transaction balance
+        example: 208279
+      transactionType:
+        type: string
+        description: transaction transactionType
+        example: "Electronic"
+  InfoRequest:
+    type: object
+    properties:
+      category:
+        type: string
+        description: transaction category
+        example: "Electronic"
+      notes:
+        type: string
+        description: transaction notes
+        example: "This is an notes for my transaction"
+  InfoResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Accounts id
+        example: "x8349"
+      message:
+        type: string
+        description: Api message
+        example: "Info created successfully"
+      category:
+        type: string
+        description: transaction category
+        example: "Electronic"
+      notes:
+        type: string
+        description: transaction notes
+        example: "This is an notes for my transaction"
+  UpdateInfoRequest:
+    type: object
+    properties:
+      category:
+        type: string
+        description: transaction category
+        example: "New category"
+      notes:
+        type: string
+        description: transaction notes
+        example: "New notes for my transaction"
+  UpdateInfoResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Accounts id
+        example: "x8349"
+      message:
+        type: string
+        description: Api message
+        example: "Info updated successfully"
+      category:
+        type: string
+        description: transaction category
+        example: "New category"
+      notes:
+        type: string
+        description: transaction notes
+        example: "New notes for my transaction"
+  DeleteInfoResponse:
+    type: object
+    properties:
+      message:
+        type: string
+        description: Api message
+        example: "Info deleted successfully"
