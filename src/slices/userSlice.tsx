@@ -5,6 +5,7 @@ export const userSlice = createSlice({
   initialState: {
     firstName: "",
     lastName: "",
+    checked: false,
   },
   reducers: {
     setFirstName: (state, action) => {
