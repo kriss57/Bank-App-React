@@ -99,49 +99,29 @@ const requestSlice = createSlice<UserState, any>({
     // logique standard des réducteurs, avec des types d'action auto-générés par réducteur
   },
   extraReducers: (builder) => {
-    //Ajouter des reducers pour des types d'actions supplémentaires ici, et gérer l'état de chargement si nécessaire
-    builder
-      //la promesse commence à etre résolue => isLoadind passe à true
-      .addCase(fetchLogin.pending, (state, action) => {
-        state.isLoading = true;
-      })
-      //la promesse est résolue => on peu passer isLoading a false
-      .addCase(fetchLogin.fulfilled, (state, action) => {
-        state.isLoading = false;
-      })
-      //la promesse et rejeté => on peu passer isLoading à false et on stock le message d'érreur dans le state
-      .addCase(fetchLogin.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message as string;
-      });
-    builder
-      // la promesse commence à etre résolue => isLoadind passe à true
-      .addCase(fetchGetUser.pending, (state, action) => {
-        state.isLoading = true;
-      })
-      // la promesse est résolue => on peu passer isLoading a false
-      .addCase(fetchGetUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-      })
-      // la promesse et rejeté => on peu passer isLoading à false et on stock le message d'érreur dans le state
-      .addCase(fetchGetUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message as string;
-      });
-    builder
-      //la promesse commence à etre résolue => isLoadind passe à true
-      .addCase(fetchUpdateUser.pending, (state, action) => {
-        state.isLoading = true;
-      })
-      //la promesse est résolue => on peu passer isLoading a false
-      .addCase(fetchUpdateUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-      })
-      //la promesse et rejeté => on peu passer isLoading à false et on stock le message d'érreur dans le state
-      .addCase(fetchUpdateUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message as string;
-      });
+    const asyncAction = (actionCreator: {
+      pending: any;
+      fulfilled: any;
+      rejected: any;
+    }) => {
+      //Ajouter des reducers pour des types d'actions supplémentaires ici, et gérer l'état de chargement si nécessaire
+      builder
+        //la promesse commence à etre résolue => isLoadind passe à true
+        .addCase(actionCreator.pending, (state, action) => {
+          state.isLoading = true;
+        })
+        //la promesse est résolue => on peu passer isLoading a false
+        .addCase(actionCreator.fulfilled, (state, action) => {
+          state.isLoading = false;
+        })
+        //la promesse et rejeté => on peu passer isLoading à false et on stock le message d'érreur dans le state
+        .addCase(actionCreator.rejected, (state, action) => {
+          state.isLoading = false;
+          state.error = action.error.message as string;
+        });
+    };
+
+    [fetchLogin, fetchGetUser, fetchUpdateUser].forEach(asyncAction);
   },
 });
 
