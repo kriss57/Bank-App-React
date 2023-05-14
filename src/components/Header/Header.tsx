@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../_assets/images/argentBankLogo.png";
-import { useDispatch, useSelector } from "react-redux";
 import { tokenService } from "../../_services/token.services";
 
 import "./header.css";
@@ -15,32 +14,15 @@ interface RootState {
 }
 
 const Header = () => {
-  const dispatch = useDispatch();
-  const rememberMe = useSelector((state: RootState) => state.userInfo.checked);
   const firstNameStore = useSelector(
     (state: RootState) => state.userInfo.firstName
   );
 
-  useEffect(() => {
-    const firstNameLocalStorage = localStorage.getItem("firstName");
-
-    if (localStorage.getItem("firstName")) {
-      dispatch({
-        type: "userInfo/setFirstName",
-        payload: firstNameLocalStorage,
-      });
-    }
-  }, [rememberMe, dispatch]);
-
-  console.log(rememberMe);
-
   const navigate = useNavigate();
 
   const logout = () => {
-    if (!rememberMe) {
-      tokenService.logout();
-      navigate("/");
-    }
+    tokenService.logout();
+    navigate("/");
   };
 
   return (

@@ -36,6 +36,10 @@ const HeaderProfil = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!formData.firstName || !formData.lastName) {
+      alert("Please fill in all required fields !");
+      return;
+    }
     dispatch(fetchUpdateUser(formData));
   };
 
@@ -62,15 +66,13 @@ const HeaderProfil = () => {
               <input
                 type="text"
                 name="firstName"
-                placeholder={userData?.firstName}
-                defaultValue={userData?.firstName}
+                placeholder="First name"
                 onChange={handleChange}
               />
               <input
                 type="text"
                 name="lastName"
-                placeholder={userData?.lastName}
-                defaultValue={userData?.lastName}
+                placeholder="Last name"
                 onChange={handleChange}
               />
             </div>
